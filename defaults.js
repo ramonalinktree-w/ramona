@@ -7,6 +7,7 @@ window.LT_DEFAULTS = {
     name: "ramona_uruguay",
     bio: "Comida del bien",
     avatar_url: "assets/avatar.jpg",
+    show_pedidosya_logo: true,
     meta_pixel_id: "",
     meta_click_event: "ClickPedidosYa"
   },

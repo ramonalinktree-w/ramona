@@ -163,6 +163,7 @@
           <label for="pBio">Descripción corta (opcional)</label>
           <input id="pBio" type="text" placeholder="Ej: Comida del bien">
         </div></div>
+        <label class="chk" style="margin-bottom:14px"><input type="checkbox" id="pLogo"> Mostrar el logo de PedidosYa debajo de las redes</label>
         <label>Foto de perfil</label>
         <div class="avatar-edit">
           <img id="pAvatarPreview" src="assets/avatar.jpg" alt="">
@@ -256,9 +257,9 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-  <script src="config.js?v=20261023"></script>
-  <script src="defaults.js?v=20261023"></script>
-  <script src="app.js?v=20261023"></script>
+  <script src="config.js?v=20261023-2"></script>
+  <script src="defaults.js?v=20261023-2"></script>
+  <script src="app.js?v=20261023-2"></script>
   <script>
     var sb = LT.sb;
     var cfg = LT.normalize(null);
@@ -331,6 +332,7 @@
           cfg = LT.normalize(res.data);
           $("pName").value = cfg.profile.name || "";
           $("pBio").value = cfg.profile.bio || "";
+          $("pLogo").checked = cfg.profile.show_pedidosya_logo !== false;
           $("pPixel").value = cfg.profile.meta_pixel_id || "";
           $("pPixelEvent").value = cfg.profile.meta_click_event || "";
           $("pAvatarUrl").value = cfg.profile.avatar_url || "";
@@ -342,6 +344,7 @@
 
     $("pName").addEventListener("input", function(){ cfg.profile.name = this.value; });
     $("pBio").addEventListener("input", function(){ cfg.profile.bio = this.value; });
+    $("pLogo").addEventListener("change", function(){ cfg.profile.show_pedidosya_logo = this.checked; });
     $("pPixel").addEventListener("input", function(){ cfg.profile.meta_pixel_id = this.value.trim(); });
     $("pPixelEvent").addEventListener("input", function(){ cfg.profile.meta_click_event = this.value.trim(); });
     $("pAvatarUrl").addEventListener("input", function(){
@@ -415,8 +418,7 @@
               '<div class="full"><label>Miniatura (opcional)</label>' +
                 '<div class="mini-upload"><input type="file" accept="image/*" data-act="thumbfile">' +
                 '<input data-k="thumb_url" type="text" placeholder="URL de la miniatura" value="'+esc(l.thumb_url||"")+'"></div>' +
-              '</div>' +
-              '<div class="full"><label class="chk"><input type="checkbox" data-k="logo" '+(l.hide_logo?"":"checked")+'> Mostrar logo de PedidosYa (solo si el link es de PedidosYa y no hay miniatura)</label></div>') +
+              '</div>') +
             '<div class="full"><button class="btn danger sm" data-act="del">Borrar</button></div>' +
           '</div>';
 
@@ -427,7 +429,6 @@
           el.querySelector('[data-k="url"]').addEventListener("input", function(){ cfg.links[i].url = this.value; });
           el.querySelector('[data-k="sublabel"]').addEventListener("input", function(){ cfg.links[i].sublabel = this.value; });
           el.querySelector('[data-k="thumb_url"]').addEventListener("input", function(){ cfg.links[i].thumb_url = this.value; });
-          el.querySelector('[data-k="logo"]').addEventListener("change", function(){ cfg.links[i].hide_logo = !this.checked; });
           el.querySelector('[data-act="thumbfile"]').addEventListener("change", function(){
             if(this.files[0]) uploadImage(this.files[0], function(url){
               cfg.links[i].thumb_url = url; renderLinks();

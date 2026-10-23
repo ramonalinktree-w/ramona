@@ -76,6 +76,12 @@
   .socials a:hover{transform:scale(1.08);background:rgba(230,75,0,.10)}
   .socials svg{width:30px;height:30px;display:block;flex:none;overflow:visible;fill:currentColor}
 
+  .py-badge{
+    display:block;margin:22px auto 0;
+    width:150px;max-width:55%;height:auto;
+  }
+  .py-badge[hidden]{display:none}
+
   .links{width:100%;display:flex;flex-direction:column;gap:14px;margin-top:30px}
 
   .section-title{
@@ -116,7 +122,6 @@
     position:absolute;left:8px;top:50%;transform:translateY(-50%);
     width:42px;height:42px;object-fit:cover;border-radius:50%;background:#fff;
   }
-  .link .thumb.logo{padding:9px;object-fit:contain;background:#fff}
   .link .kebab{
     position:absolute;right:8px;top:50%;transform:translateY(-50%);
     width:36px;height:36px;border-radius:50%;
@@ -185,6 +190,7 @@
     <h1 class="name" id="name">ramona_uruguay</h1>
     <p class="bio" id="bio"></p>
     <div class="socials" id="socials"></div>
+    <img class="py-badge" id="pyLogo" src="assets/pedidosya-logo.svg?v=20261023-2" alt="PedidosYa" hidden>
     <nav class="links" id="links"></nav>
   </main>
 
@@ -202,9 +208,9 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-  <script src="config.js?v=20261023"></script>
-  <script src="defaults.js?v=20261023"></script>
-  <script src="app.js?v=20261023"></script>
+  <script src="config.js?v=20261023-2"></script>
+  <script src="defaults.js?v=20261023-2"></script>
+  <script src="app.js?v=20261023-2"></script>
   <script>
     var CURRENT_PDF = "";
     var PROFILE = {};
@@ -216,11 +222,6 @@
       });
     }
 
-    // Los links de PedidosYa muestran su logo salvo que se desactive desde el panel (hide_logo).
-    function isPedidosYa(url){
-      try{ return /(^|.)pedidosya.com(.[a-z]{2})?$/i.test(new URL(url).hostname); }catch(e){ return false; }
-    }
-
     function render(cfg){
       PROFILE = cfg.profile || {};
       document.title = PROFILE.name || "Ramona";
@@ -229,6 +230,7 @@
       document.getElementById("avatar").alt = PROFILE.name || "";
       document.getElementById("name").textContent = PROFILE.name || "";
       document.getElementById("bio").textContent = PROFILE.bio || "";
+      document.getElementById("pyLogo").hidden = PROFILE.show_pedidosya_logo === false;
 
       var soc = document.getElementById("socials");
       soc.innerHTML = "";
@@ -275,7 +277,6 @@
 
         var html = "";
         if(l.thumb_url) html += '<img class="thumb" src="' + esc(l.thumb_url) + '" alt="">';
-        else if(isPedidosYa(l.url) && !l.hide_logo) html += '<img class="thumb logo" src="assets/pedidosya.png?v=20261023" alt="PedidosYa">';
         html += '<span class="label">' + esc(l.label);
         if(l.sublabel) html += '<span class="sub">' + esc(l.sublabel) + '</span>';
         html += '</span>';
