@@ -202,9 +202,9 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
-  <script src="config.js"></script>
-  <script src="defaults.js"></script>
-  <script src="app.js"></script>
+  <script src="config.js?v=20261023"></script>
+  <script src="defaults.js?v=20261023"></script>
+  <script src="app.js?v=20261023"></script>
   <script>
     var CURRENT_PDF = "";
     var PROFILE = {};
@@ -275,7 +275,7 @@
 
         var html = "";
         if(l.thumb_url) html += '<img class="thumb" src="' + esc(l.thumb_url) + '" alt="">';
-        else if(isPedidosYa(l.url) && !l.hide_logo) html += '<img class="thumb logo" src="assets/pedidosya.png" alt="PedidosYa">';
+        else if(isPedidosYa(l.url) && !l.hide_logo) html += '<img class="thumb logo" src="assets/pedidosya.png?v=20261023" alt="PedidosYa">';
         html += '<span class="label">' + esc(l.label);
         if(l.sublabel) html += '<span class="sub">' + esc(l.sublabel) + '</span>';
         html += '</span>';
